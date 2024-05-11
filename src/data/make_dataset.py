@@ -1,30 +1,44 @@
-# -*- coding: utf-8 -*-
-import click
-import logging
-from pathlib import Path
-from dotenv import find_dotenv, load_dotenv
+from dotenv import load_dotenv
+import os
+import base64
+from requests import post, get
+import json
+import pandas as pd
+import numpy as np
 
+load_dotenv()
 
-@click.command()
-@click.argument('input_filepath', type=click.Path(exists=True))
-@click.argument('output_filepath', type=click.Path())
-def main(input_filepath, output_filepath):
-    """ Runs data processing scripts to turn raw data from (../raw) into
-        cleaned data ready to be analyzed (saved in ../processed).
-    """
-    logger = logging.getLogger(__name__)
-    logger.info('making final data set from raw data')
+client_id = os.getenv('CLIENT_ID')
+client_secret = os.getenv('CLIENT_SECRET')
 
+def get_token():
+    auth_string = f'{client_id}:{client_secret}'
+    auth_bytes = auth_string.encode('utf-8')
+    auth_base64 = str(base64.b64encode(auth_bytes), 'utf-8')
 
-if __name__ == '__main__':
-    log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    logging.basicConfig(level=logging.INFO, format=log_fmt)
+    url = 'https://accounts.spotify.com/api/token'
+    headers = {
+        'Authorization': f'Basic {auth_base64}',
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    data = {'grant_type': 'client_credentials'}
+    result = post(url, headers=headers, data=data)
+    json_result = json.loads(result.content)
+    token = json_result['access_token']
+    return token
 
-    # not used in this stub but often useful for finding various files
-    project_dir = Path(__file__).resolve().parents[2]
+def get_auth_header(token):
+    return {'Authorization': f'Bearer {token}'}
 
-    # find .env automagically by walking up directories until it's found, then
-    # load up the .env entries as environment variables
-    load_dotenv(find_dotenv())
+def search_for(token, search_query, *filters, limit = 10):
+    headers  = get_auth_header(token)
+    query_url = f'https://api.spotify.com/v1/search?q={search_query}&type={','.join(filters)}&limit={limit}'
+    result = get(query_url, headers=headers)
+    json_result = json.loads(result.content)
 
-    main()
+    if not json_result:
+        return None
+    
+    return json_result
+
+token = get_token()
