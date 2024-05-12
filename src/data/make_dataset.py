@@ -1,10 +1,10 @@
 import base64
 import os
+from concurrent.futures import ThreadPoolExecutor
 
 import pandas as pd
 from dotenv import load_dotenv
 from requests import get, post
-from concurrent.futures import ThreadPoolExecutor
 
 load_dotenv()
 
@@ -12,43 +12,43 @@ client_id = os.getenv('CLIENT_ID')
 client_secret = os.getenv('CLIENT_SECRET')
 
 def get_token():
-    auth_string = f'{client_id}:{client_secret}'
-    auth_bytes = auth_string.encode('utf-8')
-    auth_base64 = str(base64.b64encode(auth_bytes), 'utf-8')
+    try:
+        auth_string = f'{client_id}:{client_secret}'
+        auth_bytes = auth_string.encode('utf-8')
+        auth_base64 = str(base64.b64encode(auth_bytes), 'utf-8')
 
-    url = 'https://accounts.spotify.com/api/token'
-    headers = {
-        'Authorization': f'Basic {auth_base64}',
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
-    data = {'grant_type': 'client_credentials'}
-    result = post(url, headers=headers, data=data)
-    result.raise_for_status()
-    token = result.json()['access_token']
-    
-    return token
+        url = 'https://accounts.spotify.com/api/token'
+        headers = {
+            'Authorization': f'Basic {auth_base64}',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+        data = {'grant_type': 'client_credentials'}
+        result = post(url, headers=headers, data=data)
+        result.raise_for_status()
+        token = result.json()['access_token']
 
-def get_auth_header(token):
-    return {'Authorization': f'Bearer {token}'}
+        return token
+    except:
+        return None
 
-def search_for(token, search_query, *filters, limit = 10):
-    headers  = get_auth_header(token)
+token = get_token()
+headers = {'Authorization': f'Bearer {token}'}
+
+def search_for(search_query, *filters, limit = 10):
     query_url = f'https://api.spotify.com/v1/search?q={search_query}&type={','.join(filters)}&limit={limit}'
     result = get(query_url, headers=headers)
     result.raise_for_status()
 
     return result.json()
 
-def get_playlist_tracks(token, playlist_id):
-    headers = get_auth_header(token)
+def get_playlist_tracks(playlist_id):
     query_url = f'https://api.spotify.com/v1/playlists/{playlist_id}/tracks'
     result = get(query_url, headers=headers)
     result.raise_for_status()
 
     return result.json()
 
-def get_track_features(token, track_ids):
-    headers = get_auth_header(token)
+def get_track_features(track_ids):
     query_url = f'https://api.spotify.com/v1/audio-features/'
     result = get(query_url, headers=headers, params={'ids': ','.join(track_ids)})
     result.raise_for_status
@@ -56,20 +56,18 @@ def get_track_features(token, track_ids):
     return result.json()
 
 def get_playlist_ids(keyword):
-    search = search_for(token, keyword, 'playlist', limit=2)
+    search = search_for(keyword, 'playlist', limit=2)
     return [item['id'] for item in search['playlists']['items']]
 
 def get_track_ids(playlist_id):
-    tracks = get_playlist_tracks(token, playlist_id)['items']
+    tracks = get_playlist_tracks(playlist_id)['items']
     return [track['track']['id'] for track in tracks]
 
 def extract_all(tracks):
     if len(tracks) == 0:
         return []
     
-    return get_track_features(token, tracks[:100])['audio_features'] + extract_all(tracks[100:])
-
-token = get_token()
+    return get_track_features(tracks[:100])['audio_features'] + extract_all(tracks[100:])
 
 keywords = [
     "greatest hits",
