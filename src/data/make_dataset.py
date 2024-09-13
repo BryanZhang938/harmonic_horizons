@@ -177,33 +177,36 @@ mood_keywords = {
     "happy": ["joyful", "uplifting", "positive", "feel good", "cheerful", "bright", "pop"],
 }
 
-playlist_ids = set()
-df_tracks = set()
+playlist_ids = []
+used_track_ids = set()
+df_tracks = []
 
 with ThreadPoolExecutor() as executor:
-    # Gets playlists
-    for mood in mood_keywords:
-        playlist_results = executor.map(get_playlist_ids, mood_keywords[mood])
+    for mood, keyword in mood_keywords.items():
+        playlist_results = executor.map(get_playlist_ids, keyword)
         for playlist_result in playlist_results:
-            playlist_ids.update(playlist_result)
+            playlist_ids.extend([(playlist_id, mood) for playlist_id in playlist_result])
 
-    # Gets tracks
-    track_results = executor.map(get_track_ids, playlist_ids)
-    for track in track_results:
-        df_tracks.update(track)
+with ThreadPoolExecutor() as executor:
+    for playlist_id, mood in playlist_ids:
+        track_ids = get_track_ids(playlist_id)
+        unique_track_ids = [track_id for track_id in track_ids if track_id not in used_track_ids]
 
-df_tracks = list(df_tracks)
+        df_tracks.extend([(track_id, mood) for track_id in unique_track_ids])
+        used_track_ids.update(unique_track_ids)
 
-track_data = extract_features(df_tracks)
-track_infos = extract_info(df_tracks)
+track_ids, moods = zip(*df_tracks) if df_tracks else ([], [])
+
+track_data = extract_features(track_ids)
+track_infos = extract_info(track_ids)
 
 track_data = [track for track in track_data if track is not None]
 track_infos = [info for info in track_infos if info is not None]
 
 track_df = pd.DataFrame(track_data)
 track_info_df = pd.DataFrame(track_infos)
-merged_track_df = track_df.merge(track_info_df, on='id')
+track_info_df['mood'] = moods
 
-print(playlist_ids)
+merged_track_df = track_df.merge(track_info_df, on='id')
 
 merged_track_df.to_csv('/Users/bryanzhang/Desktop/career/projects/harmonic_horizons/data/tracks.csv')
