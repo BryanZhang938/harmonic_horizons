@@ -1,7 +1,6 @@
 import base64
 import os
 from concurrent.futures import ThreadPoolExecutor
-
 import pandas as pd
 from dotenv import load_dotenv
 from requests import get, post
@@ -173,42 +172,22 @@ def extract_info(tracks: list) -> list:
     return extracted_info + extract_info(tracks[50:])
 
 
-popular_keywords = [
-    "greatest hits",
-    "top 100",
-    "best songs ever",
-    "all-time favorites",
-    "most streamed songs",
-    "classic hits",
-    "legendary tracks",
-    "iconic songs",
-    "chart-toppers",
-    "record breakers",
-    "masterpieces",
-    "famous songs"
-]
-
-unpopular_keywords = [
-    "obscure",
-    "hidden gems",
-    "underrated",
-    "indie",
-    "underground",
-    "lesser-known",
-    "unsigned artists",
-    "rare tracks",
-    "non-mainstream",
-    "unheard"
-]
+mood_keywords = {
+    "energetic": ["upbeat", "fast", "intense", "high energy", "dance", "electronic", "workout"],
+    "happy": ["joyful", "uplifting", "positive", "feel good", "cheerful", "bright", "pop"],
+}
 
 playlist_ids = set()
 df_tracks = set()
 
 with ThreadPoolExecutor() as executor:
-    playlist_results = executor.map(get_playlist_ids, popular_keywords + unpopular_keywords)
-    for playlist_result in playlist_results:
-        playlist_ids.update(playlist_result)
+    # Gets playlists
+    for mood in mood_keywords:
+        playlist_results = executor.map(get_playlist_ids, mood_keywords[mood])
+        for playlist_result in playlist_results:
+            playlist_ids.update(playlist_result)
 
+    # Gets tracks
     track_results = executor.map(get_track_ids, playlist_ids)
     for track in track_results:
         df_tracks.update(track)
@@ -225,4 +204,6 @@ track_df = pd.DataFrame(track_data)
 track_info_df = pd.DataFrame(track_infos)
 merged_track_df = track_df.merge(track_info_df, on='id')
 
-merged_track_df.to_csv('/Users/bryanzhang/Desktop/career/projects/harmonic_horizons/data/top_tracks.csv')
+print(playlist_ids)
+
+merged_track_df.to_csv('/Users/bryanzhang/Desktop/career/projects/harmonic_horizons/data/tracks.csv')
