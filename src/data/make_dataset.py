@@ -167,14 +167,20 @@ def extract_info(tracks: list) -> list:
         return []
 
     track_info = get_track_info(tracks[:50])['tracks']
-    extracted_info = [{'name': info['name'], 'popularity': info['popularity'], 'id': info['id']} for info in track_info]
+    extracted_info = [{'name': info['name'], 'popularity': info['popularity'], 'id': info['id']}
+                      if info else {'name': None, 'popularity': None, 'id': None} for info in track_info]
 
     return extracted_info + extract_info(tracks[50:])
 
 
 mood_keywords = {
-    "energetic": ["upbeat", "fast", "intense", "high energy", "dance", "electronic", "workout"],
-    "happy": ["joyful", "uplifting", "positive", "feel good", "cheerful", "bright", "pop"],
+    "energetic": ["energetic", "upbeat", "fast", "intense", "high energy", "dance", "electronic", "workout"],
+    "happy": ["happy", "joyful", "uplifting", "positive", "feel good", "cheerful", "bright", "pop"],
+    "epic": ["epic", "powerful", "cinematic", "orchestral", "heroic", "dramatic", "anthem", "triumphant"],
+    "chill": ["chill", "calm", "relaxed", "smooth", "ambient", "laid back", "downtempo", "lofi"],
+    "romantic": ["romantic", "love", "sensual", "intimate"],
+    "dark": ["dark", "moody", "brooding", "ominous", "mysterious", "haunting"],
+    "sad": ["sad", "melancholic", "emotional", "downbeat", "heartbreak"]
 }
 
 playlist_ids = []
