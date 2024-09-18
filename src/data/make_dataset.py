@@ -196,7 +196,12 @@ mood_keywords = {
         "Deep feelings music",
         "Soft sad songs",
         "Depressing tunes",
-        "Songs for rainy days"
+        "Songs for rainy days",
+        "Lonely nights music",
+        "Songs about lost love",
+        "Dark ballads",
+        "Somber tunes",
+        "Crying in the rain playlist"
     ],
     "angry": [
         "Angry music",
@@ -208,7 +213,12 @@ mood_keywords = {
         "Hard rock hits",
         "Songs for venting anger",
         "Fight music",
-        "Hardcore punk"
+        "Hardcore punk",
+        "Thrash metal",
+        "Rebel anthems",
+        "Heavy metal bangers",
+        "Aggressive rap",
+        "Unleash your anger playlist"
     ],
     "calm": [
         "Chill music",
@@ -220,7 +230,12 @@ mood_keywords = {
         "Yoga background music",
         "Chillout lounge",
         "Soft indie hits",
-        "Soothing melodies"
+        "Soothing melodies",
+        "Spa music",
+        "Sleepy time music",
+        "Peaceful piano",
+        "Tranquil nature sounds",
+        "Acoustic relaxation"
     ],
     "energetic": [
         "High-energy pop",
@@ -232,7 +247,12 @@ mood_keywords = {
         "Feel the adrenaline music",
         "Fast-paced tracks",
         "Get pumped playlist",
-        "Morning motivation songs"
+        "Morning motivation songs",
+        "High-intensity workout music",
+        "Feel the rush songs",
+        "Run faster playlist",
+        "Energetic beats",
+        "Get amped up music"
     ]
 }
 
