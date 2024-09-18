@@ -174,13 +174,66 @@ def extract_info(tracks: list) -> list:
 
 
 mood_keywords = {
-    "energetic": ["energetic", "upbeat", "fast", "intense", "high energy", "dance", "electronic", "workout"],
-    "happy": ["happy", "joyful", "uplifting", "positive", "feel good", "cheerful", "bright", "pop"],
-    "epic": ["epic", "powerful", "cinematic", "orchestral", "heroic", "dramatic", "anthem", "triumphant"],
-    "chill": ["chill", "calm", "relaxed", "smooth", "ambient", "laid back", "downtempo", "lofi"],
-    "romantic": ["romantic", "love", "sensual", "intimate"],
-    "dark": ["dark", "moody", "brooding", "ominous", "mysterious", "haunting"],
-    "sad": ["sad", "melancholic", "emotional", "downbeat", "heartbreak"]
+    "happy": [
+        "Happy songs",
+        "Feel-good music",
+        "Upbeat pop",
+        "Songs to boost your mood",
+        "Feel-good anthems",
+        "Joyful hits",
+        "Dance party",
+        "Positive vibes playlist",
+        "Summer vibes music",
+        "Songs to make you smile"
+    ],
+    "sad": [
+        "Sad songs",
+        "Melancholic ballads",
+        "Songs to cry to",
+        "Heartbreak anthems",
+        "Emotional acoustic",
+        "Tearjerkers",
+        "Deep feelings music",
+        "Soft sad songs",
+        "Depressing tunes",
+        "Songs for rainy days"
+    ],
+    "angry": [
+        "Angry music",
+        "Rage songs",
+        "Workout motivation songs",
+        "Aggressive rock",
+        "Punk rock rebellion",
+        "Metal anthems",
+        "Hard rock hits",
+        "Songs for venting anger",
+        "Fight music",
+        "Hardcore punk"
+    ],
+    "calm": [
+        "Chill music",
+        "Relaxing tunes",
+        "Ambient music",
+        "Calm acoustic",
+        "Lo-fi beats",
+        "Meditation music",
+        "Yoga background music",
+        "Chillout lounge",
+        "Soft indie hits",
+        "Soothing melodies"
+    ],
+    "energetic": [
+        "High-energy pop",
+        "Party anthems",
+        "Hype music",
+        "Upbeat dance hits",
+        "Pumped-up jams",
+        "Songs for a fun night out",
+        "Feel the adrenaline music",
+        "Fast-paced tracks",
+        "Get pumped playlist",
+        "Morning motivation songs"
+    ]
 }
 
 playlist_ids = []
@@ -215,4 +268,4 @@ track_info_df['mood'] = moods
 
 merged_track_df = track_df.merge(track_info_df, on='id')
 
-merged_track_df.to_csv('/Users/bryanzhang/Desktop/career/projects/harmonic_horizons/data/tracks.csv')
+merged_track_df.to_csv('/Users/bryanzhang/Desktop/career/projects/harmonic_horizons/data/tracks2.csv')
