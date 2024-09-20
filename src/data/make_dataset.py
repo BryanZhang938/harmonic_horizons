@@ -175,86 +175,42 @@ def extract_info(tracks: list) -> list:
 
 mood_keywords = {
     "happy": [
-        "Happy songs",
-        "Feel-good music",
-        "Upbeat pop",
-        "Songs to boost your mood",
-        "Feel-good anthems",
-        "Joyful hits",
-        "Dance party",
-        "Positive vibes playlist",
-        "Summer vibes music",
-        "Songs to make you smile"
+        "feel good songs",
+        "upbeat party anthems",
+        "happy summer hits",
+        "cheerful pop tracks",
+        "joyful dance songs"
     ],
     "sad": [
-        "Sad songs",
-        "Melancholic ballads",
-        "Songs to cry to",
-        "Heartbreak anthems",
-        "Emotional acoustic",
-        "Tearjerkers",
-        "Deep feelings music",
-        "Soft sad songs",
-        "Depressing tunes",
-        "Songs for rainy days",
-        "Lonely nights music",
-        "Songs about lost love",
-        "Dark ballads",
-        "Somber tunes",
-        "Crying in the rain playlist"
+        "melancholic ballads",
+        "heartbreak songs",
+        "sad rainy day playlist",
+        "emotional slow songs",
+        "depressing acoustic songs"
     ],
     "angry": [
-        "Angry music",
-        "Rage songs",
-        "Workout motivation songs",
-        "Aggressive rock",
-        "Punk rock rebellion",
-        "Metal anthems",
-        "Hard rock hits",
-        "Songs for venting anger",
-        "Fight music",
-        "Hardcore punk",
-        "Thrash metal",
-        "Rebel anthems",
-        "Heavy metal bangers",
-        "Aggressive rap",
-        "Unleash your anger playlist"
+        "angry rock anthems",
+        "rage metal tracks",
+        "intense workout songs",
+        "aggressive punk music",
+        "fierce rap battle songs"
     ],
     "calm": [
-        "Chill music",
-        "Relaxing tunes",
-        "Ambient music",
-        "Calm acoustic",
-        "Lo-fi beats",
-        "Meditation music",
-        "Yoga background music",
-        "Chillout lounge",
-        "Soft indie hits",
-        "Soothing melodies",
-        "Spa music",
-        "Sleepy time music",
-        "Peaceful piano",
-        "Tranquil nature sounds",
-        "Acoustic relaxation"
+        "relaxing acoustic vibes",
+        "chill lo-fi beats",
+        "soothing piano pieces",
+        "peaceful ambient music",
+        "calm meditation tracks"
     ],
-    "energetic": [
-        "High-energy pop",
-        "Party anthems",
-        "Hype music",
-        "Upbeat dance hits",
-        "Pumped-up jams",
-        "Songs for a fun night out",
-        "Feel the adrenaline music",
-        "Fast-paced tracks",
-        "Get pumped playlist",
-        "Morning motivation songs",
-        "High-intensity workout music",
-        "Feel the rush songs",
-        "Run faster playlist",
-        "Energetic beats",
-        "Get amped up music"
+    "romantic": [
+        "romantic love songs",
+        "slow dance ballads",
+        "intimate acoustic duets",
+        "valentine's day playlist",
+        "sultry jazz tunes"
     ]
 }
+
 
 playlist_ids = []
 used_track_ids = set()
