@@ -179,7 +179,8 @@ mood_keywords = {
         "upbeat party anthems",
         "happy summer hits",
         "cheerful pop tracks",
-        "joyful dance songs"
+        "joyful dance songs",
+        "energetic sing-along tunes"
     ],
     "sad": [
         "melancholic ballads",
@@ -198,16 +199,8 @@ mood_keywords = {
     "calm": [
         "relaxing acoustic vibes",
         "chill lo-fi beats",
-        "soothing piano pieces",
         "peaceful ambient music",
         "calm meditation tracks"
-    ],
-    "romantic": [
-        "romantic love songs",
-        "slow dance ballads",
-        "intimate acoustic duets",
-        "valentine's day playlist",
-        "sultry jazz tunes"
     ]
 }
 
@@ -244,4 +237,4 @@ track_info_df['mood'] = moods
 
 merged_track_df = track_df.merge(track_info_df, on='id')
 
-merged_track_df.to_csv('/Users/bryanzhang/Desktop/career/projects/harmonic_horizons/data/tracks2.csv')
+merged_track_df.to_csv('/Users/bryanzhang/Desktop/career/projects/harmonic_horizons/data/tracks.csv')
