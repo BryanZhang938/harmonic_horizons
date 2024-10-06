@@ -56,7 +56,7 @@ for i, feature in enumerate(audio_features):
 df = pd.DataFrame(track_data)
 
 # Predict Mood
-directory = '/Users/bryanzhang/Desktop/career/projects/harmonic_horizons/src/models'
+directory = '/harmonic_horizons/src/models'
 
 loaded_knn = joblib.load(os.path.join(directory, 'best_knn_model.pkl'))
 loaded_scaler = joblib.load(os.path.join(directory, 'scaler.pkl'))

@@ -237,4 +237,4 @@ track_info_df['mood'] = moods
 
 merged_track_df = track_df.merge(track_info_df, on='id')
 
-merged_track_df.to_csv('/Users/bryanzhang/Desktop/career/projects/harmonic_horizons/data/tracks.csv')
+merged_track_df.to_csv('/harmonic_horizons/data/tracks.csv')
