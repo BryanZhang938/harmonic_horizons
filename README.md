@@ -1,6 +1,5 @@
-``# Harmonic Horizons
+# Harmonic Horizons
 
----
 ## Overview
 Harmonic Horizons is a personal project I built that aimed to recommend a playlist of tracks to users based on their moods.
 
